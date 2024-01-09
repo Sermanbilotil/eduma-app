@@ -35,7 +35,7 @@ export default StyleSheet.create({
   },
 
   title: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 16,
     lineHeight: 24,
     color: '#000',
@@ -73,7 +73,7 @@ export default StyleSheet.create({
     marginTop: 2,
   },
   txt1: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 14,
     lineHeight: 21,
     fontWeight: '500',

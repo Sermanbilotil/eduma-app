@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -12,12 +12,12 @@ import {
   ActivityIndicator,
   DeviceEventEmitter,
 } from 'react-native';
-import {withTranslation} from 'react-i18next';
-import {ListCourses} from 'app-component';
-import {Client} from 'app-api';
-import {Images} from 'app-assets';
+import { withTranslation } from 'react-i18next';
+import { ListCourses } from 'app-component';
+import { Client } from 'app-api';
+import { Images } from 'app-assets';
 import IconI from 'react-native-vector-icons/Ionicons';
-import {tronLog} from 'app-common';
+import { tronLog } from 'app-common';
 import styles from './styles';
 
 const hitSlop = {
@@ -49,7 +49,7 @@ class Courses extends Component {
 
   async componentDidMount() {
     const categories = await Client.getCategory();
-    const {navigation, route} = this.props;
+    const { navigation, route } = this.props;
     const idCategory = route.params?.idCategory;
 
     await this.setState({
@@ -66,15 +66,15 @@ class Courses extends Component {
     // await this.getData();
     this.eventListener = DeviceEventEmitter.addListener(
       'keywordSearch',
-      this.updateKeywordSearch,
+      this.updateKeywordSearch
     );
     DeviceEventEmitter.addListener(
       'refresh_with_category',
-      this.refreshWithCate,
+      this.refreshWithCate
     );
     this.backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
-      this.handleBackPress,
+      this.handleBackPress
     );
   }
 
@@ -91,17 +91,17 @@ class Courses extends Component {
   }
 
   handleBackPress = () => {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     navigation.goBack(null);
     return true;
   };
 
   goBack = () => {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     navigation.goBack();
   };
 
-  refreshWithCate = async idCate => {
+  refreshWithCate = async (idCate) => {
     this.isFetchData = false;
     await this.setState({
       categorySelect: [idCate],
@@ -112,14 +112,14 @@ class Courses extends Component {
     await this.getData();
   };
 
-  updateKeywordSearch = async value => {
-    await this.setState({keySearch: value});
+  updateKeywordSearch = async (value) => {
+    await this.setState({ keySearch: value });
     this.onRefresh();
   };
 
   async getData() {
     tronLog('load_data');
-    const {page, filter, categorySelect, keySearch} = this.state;
+    const { page, filter, categorySelect, keySearch } = this.state;
 
     const param = {
       // context: 'view',
@@ -177,7 +177,7 @@ class Courses extends Component {
 
       if (
         this.state.data.length === 0 ||
-        this.state.data.find(x => x.id !== element.id)
+        this.state.data.find((x) => x.id !== element.id)
       ) {
         newData.push(element);
       }
@@ -191,8 +191,8 @@ class Courses extends Component {
   }
 
   showFilter = () => {
-    const {isShowFilter} = this.state;
-    this.setState({isShowFilter: !isShowFilter});
+    const { isShowFilter } = this.state;
+    this.setState({ isShowFilter: !isShowFilter });
   };
 
   async setFilter(value) {
@@ -205,12 +205,12 @@ class Courses extends Component {
     this.onRefresh();
   }
 
-  onSelectCate = async item => {
-    const {categorySelect} = this.state;
+  onSelectCate = async (item) => {
+    const { categorySelect } = this.state;
     if (categorySelect.includes(item.id)) {
       await this.setState({
         data: [],
-        categorySelect: categorySelect.filter(x => x !== item.id),
+        categorySelect: categorySelect.filter((x) => x !== item.id),
         isLoading: true,
       });
     } else {
@@ -230,8 +230,8 @@ class Courses extends Component {
     }, 200);
   };
 
-  renderItemFilter = ({item}) => {
-    const {categorySelect} = this.state;
+  renderItemFilter = ({ item }) => {
+    const { categorySelect } = this.state;
     return (
       <TouchableOpacity
         onPress={() => this.onSelectCate(item)}
@@ -245,12 +245,14 @@ class Courses extends Component {
           borderWidth: 1,
           borderColor: '#EBEBEB',
           marginRight: 10,
-        }}>
+        }}
+      >
         <Text
           style={[
             styles.txtItemFilter,
-            {color: categorySelect.includes(item.id) ? '#fff' : '#858585'},
-          ]}>
+            { color: categorySelect.includes(item.id) ? '#fff' : '#858585' },
+          ]}
+        >
           {item.name}
         </Text>
       </TouchableOpacity>
@@ -258,7 +260,7 @@ class Courses extends Component {
   };
 
   handleLoadMore = async () => {
-    const {page, isLoadMore} = this.state;
+    const { page, isLoadMore } = this.state;
     if (!isLoadMore) {
       return;
     }
@@ -268,7 +270,7 @@ class Courses extends Component {
     });
     tronLog('handleLoadMore');
     await this.getData();
-    await this.setState({showFooter: false});
+    await this.setState({ showFooter: false });
   };
 
   onRefresh = async () => {
@@ -288,7 +290,7 @@ class Courses extends Component {
   };
 
   refreshScreen() {
-    const {refreshing} = this.state;
+    const { refreshing } = this.state;
 
     return (
       <RefreshControl
@@ -319,7 +321,7 @@ class Courses extends Component {
       dataFilter,
       keySearch,
     } = this.state;
-    const {t, navigation} = this.props;
+    const { t, navigation } = this.props;
     return (
       <View style={styles.container}>
         <Image source={Images.bannerMyCourse} style={styles.imgBanner} />
@@ -335,7 +337,8 @@ class Courses extends Component {
                 navigation.navigate('CoursesSearchScreen', {
                   keySearch,
                 })
-              }>
+              }
+            >
               <Image source={Images.iconSearch} style={styles.iconSearch} />
             </TouchableOpacity>
           </View>
@@ -347,17 +350,19 @@ class Courses extends Component {
             justifyContent: 'space-between',
             marginHorizontal: 16,
             alignItems: 'center',
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
             {keySearch && (
               <>
                 <Text numberOfLines={1} style={styles.txtSearch}>
-                  {t('courses.searching', {keySearch})}
+                  {t('courses.searching', { keySearch })}
                 </Text>
                 <TouchableOpacity
-                  style={{marginLeft: 6}}
+                  style={{ marginLeft: 6 }}
                   hitSlop={hitSlop}
-                  onPress={this.onCloseKeywordSearch}>
+                  onPress={this.onCloseKeywordSearch}
+                >
                   <IconI name="close" size={20} />
                 </TouchableOpacity>
                 {/* <Text style={styles.txtSearch}>
@@ -369,7 +374,8 @@ class Courses extends Component {
           <View>
             <TouchableOpacity
               onPress={this.showFilter}
-              style={styles.viewFilter}>
+              style={styles.viewFilter}
+            >
               {filter === 1 && (
                 <Text style={styles.txtFilter}>Price: Low to High</Text>
               )}
@@ -407,7 +413,7 @@ class Courses extends Component {
                 </Text>
               )}
 
-              <IconI name="caret-down" color="#C5C5C5" size={8} />
+              <IconI name="ios-caret-down" color="#C5C5C5" size={8} />
             </TouchableOpacity>
           </View>
         </View>
@@ -418,17 +424,18 @@ class Courses extends Component {
             justifyContent: 'space-between',
             marginHorizontal: 16,
             alignItems: 'center',
-          }}>
+          }}
+        >
           <FlatList
             showsHorizontalScrollIndicator={false}
             horizontal
             data={dataFilter}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
             renderItem={this.renderItemFilter}
           />
         </View>
         {isLoading && (
-          <View style={{marginTop: 50}}>
+          <View style={{ marginTop: 50 }}>
             <ActivityIndicator size="small" />
           </View>
         )}
@@ -436,8 +443,9 @@ class Courses extends Component {
           <Text
             style={[
               styles.txtFilterItem,
-              {alignSelf: 'center', marginTop: 50},
-            ]}>
+              { alignSelf: 'center', marginTop: 50 },
+            ]}
+          >
             {t('dataNotFound')}
           </Text>
         )}
@@ -445,8 +453,8 @@ class Courses extends Component {
           navigation={navigation}
           data={data}
           extraData={this.state}
-          style={{marginTop: 20}}
-          contentContainerStyle={{paddingBottom: 150}}
+          style={{ marginTop: 20 }}
+          contentContainerStyle={{ paddingBottom: 150 }}
           refreshScreen={this.refreshScreen()}
           nextPage={this.handleLoadMore}
           refreshing={refreshing}
@@ -457,21 +465,24 @@ class Courses extends Component {
         {isShowFilter && (
           <TouchableWithoutFeedback
             onPress={() => {
-              this.setState({isShowFilter: false});
-            }}>
+              this.setState({ isShowFilter: false });
+            }}
+          >
             <View style={[styles.viewUpdateRole, {}]}>
               <TouchableWithoutFeedback>
                 <View
                   style={[
                     styles.viewModalFilter,
-                    {right: -deviceWidth + 127 + 16, top: 150},
-                  ]}>
+                    { right: -deviceWidth + 127 + 16, top: 150 },
+                  ]}
+                >
                   <TouchableOpacity onPress={() => this.setFilter(0)}>
                     <Text
                       style={[
                         styles.txtFilterItem,
-                        filter === 0 && {color: '#000'},
-                      ]}>
+                        filter === 0 && { color: '#000' },
+                      ]}
+                    >
                       {t('courses.filters.default')}
                     </Text>
                   </TouchableOpacity>
@@ -499,8 +510,9 @@ class Courses extends Component {
                     <Text
                       style={[
                         styles.txtFilterItem,
-                        filter === 6 && {color: '#000'},
-                      ]}>
+                        filter === 6 && { color: '#000' },
+                      ]}
+                    >
                       {t('courses.filters.title')}
                     </Text>
                   </TouchableOpacity>
@@ -508,8 +520,9 @@ class Courses extends Component {
                     <Text
                       style={[
                         styles.txtFilterItem,
-                        filter === 5 && {color: '#000'},
-                      ]}>
+                        filter === 5 && { color: '#000' },
+                      ]}
+                    >
                       {t('courses.filters.newest')}
                     </Text>
                   </TouchableOpacity>
@@ -517,8 +530,9 @@ class Courses extends Component {
                     <Text
                       style={[
                         styles.txtFilterItem,
-                        filter === 7 && {color: '#000'},
-                      ]}>
+                        filter === 7 && { color: '#000' },
+                      ]}
+                    >
                       {t('courses.filters.oldest')}
                     </Text>
                   </TouchableOpacity>
@@ -526,8 +540,9 @@ class Courses extends Component {
                     <Text
                       style={[
                         styles.txtFilterItem,
-                        filter === 3 && {color: '#000'},
-                      ]}>
+                        filter === 3 && { color: '#000' },
+                      ]}
+                    >
                       {t('courses.filters.sale')}
                     </Text>
                   </TouchableOpacity>
@@ -535,8 +550,9 @@ class Courses extends Component {
                     <Text
                       style={[
                         styles.txtFilterItem,
-                        filter === 4 && {color: '#000'},
-                      ]}>
+                        filter === 4 && { color: '#000' },
+                      ]}
+                    >
                       {t('courses.filters.popular')}
                     </Text>
                   </TouchableOpacity>

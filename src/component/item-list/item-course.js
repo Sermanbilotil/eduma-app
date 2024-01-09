@@ -14,7 +14,15 @@ import { saveDataWishlist } from '../../actions/wishlist';
 class ItemCourse extends PureComponent {
   onNavigateDetail = (item) => {
     const { navigation } = this.props;
-    navigation.navigate('CoursesDetailsScreen', { id: item.id });
+
+
+    Alert.alert('',
+      'Система тестування знаходиться на стадії наповнення новими тестами та їх поясненням. Заглядайте час від часу та ввімкніть сповіщення аби бути в курсі останніх оновлень!',
+      [
+      {text: 'Oк', onPress: () =>  navigation.navigate('CoursesDetailsScreen', { id: item.id })},
+    ]);
+
+
   };
 
   onToggleWishlish = async () => {
@@ -37,6 +45,8 @@ class ItemCourse extends PureComponent {
     const dataWishlist = wishlist?.data;
     const ids =
       wishlist && dataWishlist.length > 0 ? dataWishlist.map((x) => x.id) : [];
+
+    console.log('item.image',item.image)
     return (
       <TouchableOpacity
         onPress={() => this.onNavigateDetail(item)}

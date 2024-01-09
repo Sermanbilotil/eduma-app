@@ -13,7 +13,13 @@ import { saveDataWishlist } from '../../actions/wishlist';
 class PopularCoursesHorizontal extends PureComponent {
   onNavigateDetail = () => {
     const { item, onNavigateDetails } = this.props;
-    onNavigateDetails(item);
+
+
+    Alert.alert('',
+      'Система тестування знаходиться на стадії наповнення новими тестами та їх поясненням. Заглядайте час від часу та ввімкніть сповіщення аби бути в курсі останніх оновлень!',
+      [
+        {text: 'Oк', onPress: () =>  onNavigateDetails(item)},
+      ]);
   };
 
   onToggleWishlish = async () => {

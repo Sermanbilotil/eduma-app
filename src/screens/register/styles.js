@@ -75,7 +75,7 @@ export default StyleSheet.create({
     flex: 1,
     height: 45,
     color: '#000',
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 14,
   },
   button: {
@@ -95,7 +95,7 @@ export default StyleSheet.create({
     resizeMode: 'contain',
   },
   txtAccept: {
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 11,
     color: '#000',
     fontWeight: '400',

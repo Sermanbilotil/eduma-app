@@ -58,7 +58,7 @@ export default StyleSheet.create({
     flex: 1,
     height: 45,
     color: '#000',
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 14,
   },
   icEnter: {
@@ -83,7 +83,7 @@ export default StyleSheet.create({
     resizeMode: 'contain',
   },
   txtAccept: {
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 13,
     color: '#9E9E9E',
     fontWeight: '400',
@@ -130,7 +130,7 @@ export default StyleSheet.create({
   },
   txtForgot: {
     marginTop: 24,
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     textAlign: 'center',
     fontSize: 15,
     fontWeight: '400',

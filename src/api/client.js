@@ -146,7 +146,7 @@ const Client = {
     }),
 
   getNotifications: params =>
-    config.get('/wp-json/learnpress/notifications/v1/notifications', {
+    config.get('/wp-json/learnpress/v1/push-notifications/get-notifications', {
       ...params,
     }),
 };

@@ -34,7 +34,7 @@ export default StyleSheet.create({
     backgroundColor: '#e5e5e5',
   },
   title: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 16,
     lineHeight: 24,
     color: '#000',
@@ -49,7 +49,7 @@ export default StyleSheet.create({
     marginLeft: 13,
   },
   price: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 14,
     lineHeight: 21,
     color: '#000',
@@ -69,7 +69,7 @@ export default StyleSheet.create({
     borderRadius: 51 / 2,
   },
   txtSale: {
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'GolosText-SemiBold',
     fontSize: 12,
     lineHeight: 18,
     color: '#fff',
@@ -108,7 +108,7 @@ export default StyleSheet.create({
     color: '#939393',
   },
   txt1: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 12,
     lineHeight: 18,
     fontWeight: '500',
@@ -133,7 +133,7 @@ export default StyleSheet.create({
     color: '#58C3FF',
   },
   rate: {
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'GolosText-SemiBold',
     fontSize: 12,
     lineHeight: 18,
     color: '#fff',

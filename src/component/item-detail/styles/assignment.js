@@ -14,7 +14,7 @@ export default StyleSheet.create({
     marginBottom: 16,
   },
   txtCountDown: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 14,
     color: '#ef4444',
   },
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     color: '#64748b',
   },
   contentTitle: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 18,
     lineHeight: 22,
     color: '#1e293b',
@@ -91,7 +91,7 @@ export default StyleSheet.create({
     color: '#fff',
   },
   title: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 22,
     color: '#000',
     marginBottom: 12,
@@ -129,7 +129,7 @@ export default StyleSheet.create({
     fontFamily: 'Poppins',
   },
   txtBtn: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 12,
     lineHeight: 18,
   },
@@ -143,7 +143,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   txtRetake: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 12,
     lineHeight: 18,
     color: '#fff',
@@ -159,7 +159,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   txtFinishCourse: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 12,
     lineHeight: 18,
     color: '#fff',

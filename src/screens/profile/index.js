@@ -24,7 +24,6 @@ import {
   setRecentSearch,
   setOverview,
 } from '../../actions/user';
-import {resetNotifications} from '../../actions/notifications';
 import {showLoading} from '../../actions/common';
 
 class Profile extends Component {
@@ -92,7 +91,6 @@ class Profile extends Component {
             dispatch(saveUserToken(null));
             dispatch(setRecentSearch([]));
             dispatch(setOverview(null));
-            dispatch(resetNotifications());
             setToken(null);
           },
         },
@@ -229,7 +227,7 @@ class Profile extends Component {
             }}>
             <Text
               style={{
-                fontFamily: 'Poppins',
+                fontFamily: 'GolosText-Regular',
                 fontSize: 16,
                 marginBottom: 20,
                 color: '#444',
@@ -248,7 +246,7 @@ class Profile extends Component {
               onPress={() => navigation.navigate('LoginScreen')}>
               <Text
                 style={{
-                  fontFamily: 'Poppins',
+                  fontFamily: 'GolosText-Regular',
                   fontSize: 14,
                   color: '#fff',
                 }}>

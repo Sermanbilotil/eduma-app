@@ -21,6 +21,7 @@ const callRequestWithTimeOut = async request => {
 };
 
 const onResponse = async (request, result) => {
+
   try {
     const body = await result.text();
     const newBody = JSON.parse(body);

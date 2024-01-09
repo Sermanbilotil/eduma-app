@@ -75,8 +75,6 @@ class CoursesDetails extends Component {
 
     this.inAppPurchase();
 
-    this.refreshOverviewHomeScreen();
-
     this.backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       this.handleBackPress,
@@ -106,14 +104,6 @@ class CoursesDetails extends Component {
     this.setState({
       hiddenBottom: false,
     });
-  };
-
-  refreshOverviewHomeScreen = async () => {
-    const {dispatch} = this.props;
-
-    dispatch(setOverview(this.id));
-
-    DeviceEventEmitter.emit('refresh_overview');
   };
 
   inAppPurchase = async () => {
@@ -225,6 +215,8 @@ class CoursesDetails extends Component {
 
       await dispatch(showLoading(false));
 
+      dispatch(setOverview(this.id));
+
       dispatch(saveCourse(response));
 
       if (user?.token) {
@@ -291,32 +283,15 @@ class CoursesDetails extends Component {
 
   handleBackPress = () => {
     const {navigation} = this.props;
-
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      // Go to Home page
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'HomeTabScreen'}],
-      });
-    }
-
+    DeviceEventEmitter.emit('refresh_overview');
+    navigation.goBack(null);
     return true;
   };
 
   goBack = () => {
     const {navigation} = this.props;
-
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      // Go to Home page
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'HomeTabScreen'}],
-      });
-    }
+    DeviceEventEmitter.emit('refresh_overview');
+    navigation.goBack();
   };
 
   onNavigateLearning = (item, index) => {
@@ -406,7 +381,7 @@ class CoursesDetails extends Component {
             }}>
             <Text
               style={{
-                fontFamily: 'Poppins-Medium',
+                fontFamily: 'GolosText-Medium',
                 fontSize: 14,
               }}>
               {t('singleCourse.showAllReview', {count: review?.total})}
@@ -479,7 +454,7 @@ class CoursesDetails extends Component {
                 />
               )}
               {['completed', 'evaluated'].includes(item.status) && (
-                <IconI name="checkmark-circle" style={styles.iconPreview} />
+                <IconI name="ios-checkmark-circle" style={styles.iconPreview} />
               )}
             </View>
           </TouchableOpacity>
@@ -494,26 +469,16 @@ class CoursesDetails extends Component {
 
     if (data.sections.length > 0 && data.sections[0].items.length > 0) {
       let itemRedirect = null;
-      let sectionActive = 0;
 
       data.sections.forEach(section => {
         if (!itemRedirect) {
           itemRedirect = section.items.find(
             item => item.status !== 'completed',
           );
-
-          if (itemRedirect) {
-            sectionActive = data.sections.findIndex(
-              sec => sec.id === section.id,
-            );
-          }
         }
       });
 
-      this.onNavigateLearning(
-        itemRedirect || data.sections[0].items[0],
-        sectionActive,
-      );
+      this.onNavigateLearning(itemRedirect || data.sections[0].items[0], 0);
     }
   };
 
@@ -867,14 +832,8 @@ class CoursesDetails extends Component {
             <TouchableOpacity
               style={styles.viewInstructor}
               onPress={() =>
-                navigation.reset({
-                  index: 0,
-                  routes: [
-                    {
-                      name: 'InstructorScreen',
-                      params: {instructor: data?.instructor},
-                    },
-                  ],
+                navigation.navigate('InstructorScreen', {
+                  instructor: data?.instructor,
                 })
               }>
               <Image
@@ -892,30 +851,66 @@ class CoursesDetails extends Component {
                   alignItems: 'center',
                   marginTop: 10,
                 }}>
-                <TouchableOpacity
-                  disabled={data?.instructor?.social?.facebook === ''}
-                  onPress={() =>
-                    Linking.openURL(data?.instructor?.social?.facebook)
-                  }
-                  style={{marginHorizontal: 6}}>
-                  <IconF name="facebook" color="#D2D2D2" size={15} />
-                </TouchableOpacity>
+                {/*<TouchableOpacity*/}
+                {/*  disabled={data?.instructor?.social?.facebook === ''}*/}
+                {/*  onPress={() =>*/}
+                {/*    Linking.openURL(data?.instructor?.social?.facebook)*/}
+                {/*  }*/}
+                {/*  style={{marginHorizontal: 6}}>*/}
+                {/*  <IconF name="facebook" color="#D2D2D2" size={15} />*/}
+                {/*</TouchableOpacity>*/}
                 {/* <TouchableOpacity
                   disabled={data?.instructor?.social.facebook === ''}
                 >
                   <Image source={Images.iconInstagram} style={styles.iconIns} />
                 </TouchableOpacity> */}
-                <TouchableOpacity
-                  onPress={() =>
-                    Linking.openURL(data?.instructor?.social?.twitter)
-                  }
-                  disabled={data?.instructor?.social?.twitter === ''}
-                  style={{marginHorizontal: 6}}>
-                  <IconF name="twitter" color="#D2D2D2" size={14} />
-                </TouchableOpacity>
+                {/*<TouchableOpacity*/}
+                {/*  onPress={() =>*/}
+                {/*    Linking.openURL(data?.instructor?.social?.twitter)*/}
+                {/*  }*/}
+                {/*  disabled={data?.instructor?.social?.twitter === ''}*/}
+                {/*  style={{marginHorizontal: 6}}>*/}
+                {/*  <IconF name="twitter" color="#D2D2D2" size={14} />*/}
+                {/*</TouchableOpacity>*/}
                 {/* <TouchableOpacity>
                   <Image source={Images.iconGoogle2} style={styles.iconIns} />
                 </TouchableOpacity> */}
+                <TouchableOpacity
+                  disabled={false}
+                  style={{marginHorizontal: 6}}
+                  onPress={() =>
+                    data?.instructor?.id === 1 ?
+                      Linking.openURL("https://t.me/paskyphd")
+                      : data?.instructor?.id === 11
+                        ? Linking.openURL("https://t.me/mrtnolh")
+                        : data?.instructor?.id === 29
+                          ? Linking.openURL("https://t.me/tarasovychh")
+
+                          : Linking.openURL("https://t.me/sapiensmed")
+
+                  }>
+                  <IconF name="send" size={16} color={'#D2D2D2'} />
+
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  disabled={false}
+                  style={{marginHorizontal: 6}}
+                  onPress={() =>
+
+                    data?.instructor?.id === 1 ?
+                      Linking.openURL("https://instagram.com/p_ometsinskiy?igshid=MzRlODBiNWFlZA==")
+                      : data?.instructor?.id === 11
+                        ? Linking.openURL("https://instagram.com/mrtnolh?igshid=MzRlODBiNWFlZA==")
+                        : data?.instructor?.id === 29
+                          ? Linking.openURL("https://instagram.com/ivanykovych_t?igshid=MzRlODBiNWFlZA==")
+
+                          : Linking.openURL("https://instagram.com/p_ometsinskiy?igshid=MzRlODBiNWFlZA==")
+
+                  }>
+                  <IconF name="instagram" size={16} color={'#D2D2D2'} />
+                </TouchableOpacity>
+
                 <TouchableOpacity
                   onPress={() =>
                     Linking.openURL(data?.instructor?.social?.youtube)
@@ -963,7 +958,7 @@ class CoursesDetails extends Component {
               <View>
                 <Text
                   style={{
-                    fontFamily: 'Poppins-Medium',
+                    fontFamily: 'GolosText-Medium',
                     fontSize: 18,
                     fontWeight: '500',
                     marginBottom: 5,
@@ -1053,7 +1048,7 @@ class CoursesDetails extends Component {
                   <Text
                     style={{
                       color: '#fff',
-                      fontFamily: 'Poppins-Medium',
+                      fontFamily: 'GolosText-Medium',
                       fontSize: 13,
                       fontWeight: '500',
                       lineHeight: 18,
@@ -1098,20 +1093,20 @@ class CoursesDetails extends Component {
               </TouchableOpacity>
             ) : data?.price > 0 && !data?.course_data.status ? (
               <>
-                <TouchableOpacity
-                  style={styles.btnAddToCart}
-                  onPress={() => this.restorePurchases(String(data.id))}>
-                  <Text style={styles.txtAddToCart}>
-                    {t('singleCourse.btnRestore')}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.btnAddToCart}
-                  onPress={() => this.addToCard(String(data.id))}>
-                  <Text style={styles.txtAddToCart}>
-                    {t('singleCourse.btnAddToCart')}
-                  </Text>
-                </TouchableOpacity>
+                {/*<TouchableOpacity*/}
+                {/*  style={styles.btnAddToCart}*/}
+                {/*  onPress={() => this.restorePurchases(String(data.id))}>*/}
+                {/*  <Text style={styles.txtAddToCart}>*/}
+                {/*    {t('singleCourse.btnRestore')}*/}
+                {/*  </Text>*/}
+                {/*</TouchableOpacity>*/}
+                {/*<TouchableOpacity*/}
+                {/*  style={styles.btnAddToCart}*/}
+                {/*  onPress={() => this.addToCard(String(data.id))}>*/}
+                {/*  <Text style={styles.txtAddToCart}>*/}
+                {/*    {t('singleCourse.btnAddToCart')}*/}
+                {/*  </Text>*/}
+                {/*</TouchableOpacity>*/}
               </>
             ) : (
               data?.price === 0 &&
@@ -1139,7 +1134,7 @@ class CoursesDetails extends Component {
                   }}>
                   <Text
                     style={{
-                      fontFamily: 'Poppins-Medium',
+                      fontFamily: 'GolosText-Medium',
                       fontSize: 14,
                       lineHeight: 21,
                       color:
@@ -1184,7 +1179,7 @@ class CoursesDetails extends Component {
                 }}>
                 <Text
                   style={{
-                    fontFamily: 'Poppins-Medium',
+                    fontFamily: 'GolosText-Medium',
                     fontSize: 14,
                     lineHeight: 21,
                     color: '#000',

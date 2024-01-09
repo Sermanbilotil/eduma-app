@@ -71,7 +71,7 @@ const PopularCourses = memo(
           >
             <Text
               style={{
-                fontFamily: 'Poppins-Medium',
+                fontFamily: 'GolosText-Medium',
                 fontWeight: '500',
                 fontSize: 12,
                 lineHeight: 18,

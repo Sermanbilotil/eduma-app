@@ -196,7 +196,7 @@ class Wishlist extends Component {
           >
             <Text
               style={{
-                fontFamily: 'Poppins',
+                fontFamily: 'GolosText-Regular',
                 fontSize: 16,
                 marginBottom: 20,
                 color: '#444',

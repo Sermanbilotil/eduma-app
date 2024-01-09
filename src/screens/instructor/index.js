@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import {
   Text,
   View,
@@ -7,15 +7,15 @@ import {
   RefreshControl,
   TouchableOpacity,
   Linking,
-} from 'react-native';
-import {withTranslation} from 'react-i18next';
-import {Client} from 'app-api';
-import {Images} from 'app-assets';
-import {connect} from 'react-redux';
-import {tronLog} from 'app-common';
-import styles from './styles';
-import IconF from 'react-native-vector-icons/Feather';
-import ListCoursesOfInstructor from '../../component/list/list-course-instructor';
+} from "react-native";
+import { withTranslation } from "react-i18next";
+import { Client } from "app-api";
+import { Images } from "app-assets";
+import { connect } from "react-redux";
+import { tronLog } from "app-common";
+import styles from "./styles";
+import IconF from "react-native-vector-icons/Feather";
+import ListCoursesOfInstructor from "../../component/list/list-course-instructor";
 
 class Instructor extends Component {
   constructor(props) {
@@ -31,13 +31,13 @@ class Instructor extends Component {
   }
 
   async componentDidMount() {
-    const {route} = this.props;
+    const { route } = this.props;
     this.instructor = route.params?.instructor;
     this.forceUpdate();
-    tronLog('instructor', this.instructor);
+    tronLog("instructor", this.instructor);
     this.getData();
     this.backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
+      "hardwareBackPress",
       this.handleBackPress,
     );
   }
@@ -64,27 +64,18 @@ class Instructor extends Component {
   };
 
   handleBackPress = () => {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     navigation.goBack(null);
     return true;
   };
 
   goBack = () => {
-    const {navigation} = this.props;
-
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      // Go to Home page
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'HomeTabScreen'}],
-      });
-    }
+    const { navigation } = this.props;
+    navigation.goBack();
   };
 
   handleLoadMore = async () => {
-    const {page, isLoadMore} = this.state;
+    const { page, isLoadMore } = this.state;
     if (!isLoadMore) {
       return;
     }
@@ -92,9 +83,9 @@ class Instructor extends Component {
       showFooter: true,
       page: page + 1,
     });
-    tronLog('handleLoadMore');
+    tronLog("handleLoadMore");
     await this.getData();
-    await this.setState({showFooter: false});
+    await this.setState({ showFooter: false });
   };
 
   onRefresh = async () => {
@@ -114,8 +105,8 @@ class Instructor extends Component {
   };
 
   refreshScreen() {
-    const {refreshing} = this.state;
-
+    const { refreshing } = this.state;
+    console.log("this.instructor?", this.instructor?.id);
     return (
       <RefreshControl
         refreshing={refreshing}
@@ -126,8 +117,8 @@ class Instructor extends Component {
   }
 
   render() {
-    const {refreshing, showFooter, data} = this.state;
-    const {t, navigation} = this.props;
+    const { refreshing, showFooter, data } = this.state;
+    const { t, navigation } = this.props;
     return (
       <View style={styles.container}>
         <Image source={Images.bannerMyCourse} style={styles.imgBanner} />
@@ -135,10 +126,10 @@ class Instructor extends Component {
           <View style={styles.header1}>
             <TouchableOpacity
               onPress={this.goBack}
-              hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+              hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}>
               <Image source={Images.iconBack} style={styles.iconBack} />
             </TouchableOpacity>
-            <Text style={styles.title}>{t('instructorScreen.title')}</Text>
+            <Text style={styles.title}>{t("instructorScreen.title")}</Text>
           </View>
         </View>
         <View style={styles.viewInstructor}>
@@ -149,30 +140,47 @@ class Instructor extends Component {
                 uri:
                   this.instructor?.avatar_url ||
                   this.instructor?.avatar ||
-                  'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png',
+                  "https://iupac.org/wp-content/uploads/2018/05/default-avatar.png",
               }}
             />
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
+                flexDirection: "row",
+                alignItems: "center",
                 marginTop: 10,
                 gap: 8,
               }}>
               <TouchableOpacity
-                disabled={!this.instructor?.social?.facebook}
+                disabled={false}
                 onPress={() =>
-                  Linking.openURL(this.instructor?.social?.facebook)
+                  this.instructor?.id === 1 ?
+                    Linking.openURL("https://t.me/paskyphd")
+                    : this.instructor?.id === 11
+                      ? Linking.openURL("https://t.me/mrtnolh")
+                      : this.instructor?.id === 29
+                        ? Linking.openURL("https://t.me/tarasovychh")
+
+                        : Linking.openURL("https://t.me/sapiensmed")
+
                 }>
-                <IconF name="facebook" size={16} color={'#444'} />
+                <IconF name="send" size={16} color={"#444"} />
+
               </TouchableOpacity>
 
               <TouchableOpacity
-                disabled={!this.instructor?.social?.twitter}
+                disabled={false}
                 onPress={() =>
-                  Linking.openURL(this.instructor?.social?.twitter)
+                  this.instructor?.id === 1 ?
+                    Linking.openURL("https://instagram.com/p_ometsinskiy?igshid=MzRlODBiNWFlZA==")
+                    : this.instructor?.id === 11
+                      ? Linking.openURL("https://instagram.com/mrtnolh?igshid=MzRlODBiNWFlZA==")
+                      : this.instructor?.id === 29
+                        ? Linking.openURL("https://instagram.com/ivanykovych_t?igshid=MzRlODBiNWFlZA==")
+
+                        : Linking.openURL("https://instagram.com/p_ometsinskiy?igshid=MzRlODBiNWFlZA==")
+
                 }>
-                <IconF name="twitter" size={16} color={'#444'} />
+                <IconF name="instagram" size={16} color={"#444"} />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -180,7 +188,7 @@ class Instructor extends Component {
                 onPress={() =>
                   Linking.openURL(this.instructor?.social?.youtube)
                 }>
-                <IconF name="youtube" size={16} color={'#444'} />
+                <IconF name="youtube" size={16} color={"#444"} />
               </TouchableOpacity>
             </View>
           </View>
@@ -193,19 +201,19 @@ class Instructor extends Component {
         {this.instructor?.instructor_data && (
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
               paddingHorizontal: 16,
             }}>
             <Text style={styles.txtTitle}>
-              {t('instructorScreen.countCourse', {
+              {t("instructorScreen.countCourse", {
                 count: this.instructor?.instructor_data?.total_courses || 0,
               })}
             </Text>
             <Text style={styles.txtTitle}>
-              {t('instructorScreen.countStudent', {
-                count: this.instructor?.instructor_data?.total_users || 0,
+              {t("instructorScreen.countStudent", {
+                count: this.instructor?.id === 1 ? 692 : this.instructor?.id === 11 ? 26 : this.instructor?.id === 29 ? 21 : this.instructor?.id === 23 ? 19 :   this.instructor?.instructor_data?.total_users || 0,
               })}
             </Text>
           </View>
@@ -215,16 +223,16 @@ class Instructor extends Component {
           <Text
             style={[
               styles.txtFilterItem,
-              {alignSelf: 'center', marginTop: 50},
+              { alignSelf: "center", marginTop: 50 },
             ]}>
-            {t('dataNotFound')}
+            {t("dataNotFound")}
           </Text>
         )}
         <ListCoursesOfInstructor
           data={data}
           navigation={navigation}
-          style={{marginTop: 20}}
-          contentContainerStyle={{paddingBottom: 150}}
+          style={{ marginTop: 20 }}
+          contentContainerStyle={{ paddingBottom: 150 }}
           refreshScreen={this.refreshScreen()}
           nextPage={this.handleLoadMore}
           refreshing={refreshing}
@@ -234,10 +242,11 @@ class Instructor extends Component {
     );
   }
 }
-const mapStateToProps = ({wishlist}) => ({
+
+const mapStateToProps = ({ wishlist }) => ({
   wishlist,
 });
-const mapDispatchToProps = dispatch => ({dispatch});
+const mapDispatchToProps = dispatch => ({ dispatch });
 
 export default connect(
   mapStateToProps,

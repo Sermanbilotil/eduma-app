@@ -74,7 +74,7 @@ export default StyleSheet.create({
     zIndex: -1,
   },
   title: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontWeight: '500',
     fontSize: 18,
     lineHeight: 27,
@@ -113,7 +113,7 @@ export default StyleSheet.create({
   // },
 
   childTitle: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontWeight: '500',
     fontSize: 18,
     lineHeight: 27,
@@ -190,7 +190,7 @@ export default StyleSheet.create({
     marginHorizontal: 16,
   },
   txtSubTitle: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 16,
     lineHeight: 22,
     color: '#000',
@@ -235,7 +235,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   txtFinish: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 14,
     lineHeight: 21,
     color: '#fff',
@@ -252,7 +252,7 @@ export default StyleSheet.create({
     marginHorizontal: 3,
   },
   txtPage: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 10,
     lineHeight: 20,
     color: '#000',
@@ -281,7 +281,7 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   txtTitleQuestion: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 13,
     lineHeight: 20,
     color: '#000',
@@ -306,7 +306,7 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   txtTitleQuestion1: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 13,
     lineHeight: 20,
     color: '#000',
@@ -334,7 +334,7 @@ export default StyleSheet.create({
     marginRight: 10,
   },
   txtBtnSubmit: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 14,
     lineHeight: 21,
     color: '#000',
@@ -384,28 +384,28 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   txtCircle: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 30,
     // lineHeight: 30,
     color: '#000',
     fontWeight: '500',
   },
   txtLable: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 18,
     lineHeight: 30,
     color: '#000',
     fontWeight: '500',
   },
   txtResult: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 30,
     // lineHeight: 30,
     color: '#F46647',
     fontWeight: '500',
   },
   txt1: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 14,
     lineHeight: 24,
     color: '#D03838',
@@ -413,7 +413,7 @@ export default StyleSheet.create({
     marginBottom: 20,
   },
   txt2: {
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'GolosText-SemiBold',
     fontSize: 13,
     lineHeight: 19,
     color: '#000',
@@ -440,14 +440,14 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   txtRetoke: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 12,
     lineHeight: 18,
     color: '#fff',
     fontWeight: '500',
   },
   txtReview: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 12,
     lineHeight: 18,
     color: '#000',

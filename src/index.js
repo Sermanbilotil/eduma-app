@@ -1,40 +1,34 @@
-import 'react-native-gesture-handler';
-import React, {useEffect} from 'react';
-import {Platform, StatusBar, DeviceEventEmitter} from 'react-native';
-import {PersistGate} from 'redux-persist/integration/react';
-import {NavigationContainer} from '@react-navigation/native';
-import {Provider} from 'react-redux';
-import SplashScreen from 'react-native-splash-screen';
-import NetInfo from '@react-native-community/netinfo';
-import codePush from 'react-native-code-push';
-import notifee, {EventType, AuthorizationStatus} from '@notifee/react-native';
-import messaging from '@react-native-firebase/messaging';
-import './config/translations';
-import RootScreen from './screens/root';
-import configStore from './store/index';
-import {setToken} from './api/config';
-import {Client} from './api';
-import {saveStatusNetwork} from './actions/network';
-import {saveNotifications} from './actions/notifications';
-import DEEP_LINKING from './navigations/deeplinking';
-import {CODE_PUSH} from './config';
-import {registerFCMToken} from './common/util/fcmToken';
-import {navigationRef, navigate} from './navigations/navigations';
-import NotificationModal from './component/common/notification-modal';
+import "react-native-gesture-handler";
+import React, { useEffect, useRef, useState } from "react";
+import { Dimensions, Platform, StatusBar, StyleSheet, View, Text, Button, TouchableOpacity, Image } from "react-native";
+import { PersistGate } from "redux-persist/integration/react";
+import { NavigationContainer } from "@react-navigation/native";
+import { Provider } from "react-redux";
+import SplashScreen from "react-native-splash-screen";
+import NetInfo from "@react-native-community/netinfo";
+import codePush from "react-native-code-push";
+import notifee, { EventType, AuthorizationStatus } from "@notifee/react-native";
+import messaging from "@react-native-firebase/messaging";
+import "./config/translations";
+import RootScreen from "./screens/root";
+import configStore from "./store/index";
+import { setToken } from "./api/config";
+import { saveStatusNetwork } from "./actions/network";
+import { CODE_PUSH } from "./config";
+import { registerFCMToken } from "./common/util/fcmToken";
+import { navigationRef, navigate } from "./navigations/navigations";
 
-const {store, persistor} = configStore();
+const { store, persistor } = configStore();
 
-export {store};
+export { store };
 
 const MyApp = () => {
-  const [isVisible, setIsVisible] = React.useState(false);
-
   useEffect(() => {
-    (async function () {
+    async function setup() {
       try {
         await codePush.sync({
           deploymentKey:
-            Platform.OS === 'ios' ? CODE_PUSH.ios : CODE_PUSH.android,
+            Platform.OS === "ios" ? CODE_PUSH.ios : CODE_PUSH.android,
           installMode: codePush.InstallMode.IMMEDIATE,
         });
         setTimeout(() => {
@@ -45,7 +39,9 @@ const MyApp = () => {
       }
 
       await onNotification();
-    })();
+    }
+
+    setup();
   }, []);
 
   async function onNotification() {
@@ -53,7 +49,7 @@ const MyApp = () => {
     const settings = await notifee.requestPermission();
 
     if (settings.authorizationStatus < AuthorizationStatus.AUTHORIZED) {
-      setIsVisible(true);
+      // TODO: Add setting to enable/disable notifications in store.
     }
 
     await registerFCMToken();
@@ -63,55 +59,22 @@ const MyApp = () => {
         title: remoteMessage.notification.title,
         body: remoteMessage.notification.body,
         android: {
-          channelId: 'default',
+          channelId: "default",
         },
       });
-
-      DeviceEventEmitter.emit('notificationReceived');
     });
 
     messaging().onNotificationOpenedApp(remoteMessage => {
-      navigate('NotificationsScreen');
+      navigate("NotificationsScreen");
     });
 
-    notifee.onForegroundEvent(({type}) => {
+    notifee.onForegroundEvent(({ type }) => {
       switch (type) {
         case EventType.PRESS:
-          navigate('NotificationsScreen');
+          navigate("NotificationsScreen");
           break;
       }
     });
-
-    if (!isVisible) {
-      fetchNotifications();
-
-      DeviceEventEmitter.addListener('notificationReceived', async () => {
-        await fetchNotifications();
-      });
-    }
-  }
-
-  async function fetchNotifications() {
-    const {user} = store.getState();
-
-    if (user?.token) {
-      setToken(user?.token);
-
-      try {
-        const response = await Client.getNotifications({
-          per_page: 20,
-          page: 1,
-        });
-
-        if (response?.success) {
-          await store.dispatch(
-            saveNotifications(response?.data?.notifications || []),
-          );
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }
   }
 
   const onBeforeLift = async () => {
@@ -123,7 +86,7 @@ const MyApp = () => {
       }
     });
 
-    const {user} = store.getState();
+    const { user } = store.getState();
 
     if (user?.token) {
       setToken(user?.token);
@@ -136,18 +99,21 @@ const MyApp = () => {
         onBeforeLift={onBeforeLift}
         loading={null}
         persistor={persistor}>
-        <NavigationContainer ref={navigationRef} linking={DEEP_LINKING}>
+        <NavigationContainer ref={navigationRef}>
           <StatusBar
             translucent
             backgroundColor="rgba(255,255,255,0.1)"
             barStyle="dark-content"
           />
           <RootScreen />
-          <NotificationModal isVisible={isVisible} />
         </NavigationContainer>
       </PersistGate>
     </Provider>
+
   );
 };
 
 export default codePush(MyApp);
+
+
+

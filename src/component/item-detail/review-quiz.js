@@ -16,6 +16,7 @@ import Modal from 'react-native-modal';
 import {withTranslation} from 'react-i18next';
 import {t} from 'i18next';
 import styles from './styles/review-quiz';
+import he from "he";
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -334,13 +335,12 @@ class ReviewQuiz extends Component {
             )}
             {itemQuestion && (
               <View style={styles.viewQuestion}>
-                <RenderDataHTML
-                  html={itemQuestion?.title}
-                  style={styles.txtTitleQuestion}
-                />
 
-                <RenderDataHTML html={itemQuestion?.content} />
-
+                {itemQuestion?.title &&  <Text style={styles.txtTitleQuestion}>{he.decode(itemQuestion?.title.replaceAll("^", ""))}</Text>}
+                {/*<RenderDataHTML html={itemQuestion?.content} />*/}
+                {itemQuestion && itemQuestion?.content &&
+                  <Text style={styles.txtOverview}>{he.decode(  itemQuestion?.content.replace(/<[^>]+>/g, "").replaceAll("^", ""))}</Text>}
+                
                 {(itemQuestion.type === 'true_or_false' ||
                   itemQuestion.type === 'single_choice') &&
                   itemQuestion.options.map((item, i) =>
@@ -423,7 +423,7 @@ class ReviewQuiz extends Component {
                     style={{
                       color: '#b334af',
                       marginLeft: 5,
-                      fontFamily: 'Poppins-Medium',
+                      fontFamily: 'GolosText-Medium',
                     }}>
                     {t('learningScreen.quiz.explanation')}
                   </Text>

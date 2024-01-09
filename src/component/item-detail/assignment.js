@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,20 +9,20 @@ import {
   Linking,
   Keyboard,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useTranslation} from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import IconF from 'react-native-vector-icons/Feather';
-import {SITE_URL} from 'app-config';
-import {tronLog} from 'app-common';
+import { SITE_URL } from 'app-config';
+import { tronLog } from 'app-common';
 import DocumentPicker from 'react-native-document-picker';
-import {Client} from 'app-api';
-import {RenderDataHTML} from 'app-component';
+import { Client } from 'app-api';
+import { RenderDataHTML } from 'app-component';
 import styles from './styles/assignment';
 import CountDown from '../common/countdown';
-import {showLoading} from '../../actions/common';
+import { showLoading } from '../../actions/common';
 
-export default function Assignment({navigation, id, onFinishCourse}) {
-  const {t} = useTranslation();
+export default function Assignment({ navigation, id, onFinishCourse }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
@@ -40,10 +40,10 @@ export default function Assignment({navigation, id, onFinishCourse}) {
 
   useEffect(() => {
     const subKWS = Keyboard.addListener('keyboardWillShow', () =>
-      setIsScrollEnabled(false),
+      setIsScrollEnabled(false)
     );
     const subKDS = Keyboard.addListener('keyboardDidShow', () =>
-      setIsScrollEnabled(false),
+      setIsScrollEnabled(false)
     );
 
     return () => {
@@ -66,7 +66,7 @@ export default function Assignment({navigation, id, onFinishCourse}) {
       () => {
         navigation.goBack();
         return true;
-      },
+      }
     );
 
     return () => backHandler.remove();
@@ -86,8 +86,7 @@ export default function Assignment({navigation, id, onFinishCourse}) {
 
   const onChooseFile = async () => {
     try {
-      const documents = await DocumentPicker.pick({
-        allowMultiSelection: true,
+      const documents = await DocumentPicker.pickMultiple({
         copyTo: 'documentDirectory',
         type: [
           DocumentPicker.types.allFiles,
@@ -119,7 +118,7 @@ export default function Assignment({navigation, id, onFinishCourse}) {
       param.append('note', note);
 
       if (files.length > 0) {
-        files.forEach(file => {
+        files.forEach((file) => {
           param.append('file[]', {
             uri: file.fileCopyUri,
             type: file.type,
@@ -149,7 +148,7 @@ export default function Assignment({navigation, id, onFinishCourse}) {
 
   const onStart = async () => {
     dispatch(showLoading(true));
-    const response = await Client.startAssignment({id: data.id});
+    const response = await Client.startAssignment({ id: data.id });
 
     if (response.data.status === 200) {
       await getDataResponse();
@@ -162,7 +161,7 @@ export default function Assignment({navigation, id, onFinishCourse}) {
 
   const onRetake = async () => {
     dispatch(showLoading(true));
-    const response = await Client.retakeAssignment({id: data.id});
+    const response = await Client.retakeAssignment({ id: data.id });
 
     if (response.data.status === 200) {
       await getDataResponse();
@@ -173,7 +172,7 @@ export default function Assignment({navigation, id, onFinishCourse}) {
     dispatch(showLoading(false));
   };
 
-  const onDeleteFile = async fileId => {
+  const onDeleteFile = async (fileId) => {
     dispatch(showLoading(true));
     const response = await Client.deleteFileAssignment({
       fileId,
@@ -224,7 +223,7 @@ export default function Assignment({navigation, id, onFinishCourse}) {
           </View>
           {data.introdution ? (
             <>
-              <Text style={[styles.title, {marginTop: 20}]}>
+              <Text style={[styles.title, { marginTop: 20 }]}>
                 {t('learningScreen.assignment.overview')}
               </Text>
               <Text style={styles.txtDescription}>{data.introdution}</Text>
@@ -237,7 +236,8 @@ export default function Assignment({navigation, id, onFinishCourse}) {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-            }}>
+            }}
+          >
             <TouchableOpacity style={styles.btn} onPress={onStart}>
               <Text style={styles.txtBtn}>
                 {t('learningScreen.assignment.start')}
@@ -248,7 +248,8 @@ export default function Assignment({navigation, id, onFinishCourse}) {
             {data?.can_finish_course && (
               <TouchableOpacity
                 style={styles.btnFinishCourse}
-                onPress={onFinishCourse}>
+                onPress={onFinishCourse}
+              >
                 <Text style={styles.txtFinishCourse}>
                   {t('learningScreen.finishCourse')}
                 </Text>
@@ -274,13 +275,15 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                       flex: 1,
                       flexDirection: 'row',
                       alignItems: 'center',
-                    }}>
+                    }}
+                  >
                     <Text
                       style={{
-                        fontFamily: 'Poppins-Medium',
+                        fontFamily: 'GolosText-Medium',
                         fontSize: 14,
                         color: '#000',
-                      }}>
+                      }}
+                    >
                       {`${data.evaluation?.user_mark || 0}/${
                         data.evaluation?.mark || 0
                       }`}
@@ -297,9 +300,10 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                         borderRadius: 4,
                         paddingHorizontal: 5,
                         paddingVertical: 3,
-                      }}>
+                      }}
+                    >
                       {data.evaluation?.graduation ? (
-                        <Text style={{color: '#fff', fontSize: 12}}>
+                        <Text style={{ color: '#fff', fontSize: 12 }}>
                           {GRADUATION[data.evaluation.graduation]}
                         </Text>
                       ) : null}
@@ -318,13 +322,14 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                     ? data.attachment.map((item, index) => (
                         <TouchableOpacity
                           onPress={() => Linking.openURL(item?.url || '')}
-                          key={item?.id || index}>
+                          key={item?.id || index}
+                        >
                           <Text style={styles.txtItem} key={item.id || index}>
                             <IconF name="link" color="#94a3b8" size={12} />{' '}
                             {item.id
                               ? item.name
                               : t(
-                                  'learningScreen.assignment.missingAttachment',
+                                  'learningScreen.assignment.missingAttachment'
                                 )}
                           </Text>
                         </TouchableOpacity>
@@ -335,11 +340,11 @@ export default function Assignment({navigation, id, onFinishCourse}) {
 
               {/* Your answer note */}
               {data.assignment_answer?.note ? (
-                <View style={{marginBottom: 8}}>
+                <View style={{ marginBottom: 8 }}>
                   <Text style={styles.lable}>
                     {t('learningScreen.assignment.yourAnswer')}
                   </Text>
-                  <Text style={{...styles.txtItem, marginTop: 10}}>
+                  <Text style={{ ...styles.txtItem, marginTop: 10 }}>
                     {data.assignment_answer.note}
                   </Text>
                 </View>
@@ -347,44 +352,49 @@ export default function Assignment({navigation, id, onFinishCourse}) {
 
               {/* Your uploaded files */}
               {data.assignment_answer?.file ? (
-                <View style={{marginBottom: 8}}>
+                <View style={{ marginBottom: 8 }}>
                   <Text style={styles.lable}>
                     {t('learningScreen.assignment.yourUploadedFiles')}
                   </Text>
-                  <View style={{...styles.txtItem, marginTop: 8}}>
-                    {Object.entries(data.assignment_answer.file).map(entry => (
-                      <View
-                        key={entry[0]}
-                        style={{
-                          flexDirection: 'row',
-                          paddingBottom: 5,
-                        }}>
-                        <TouchableOpacity
-                          onPress={() =>
-                            Linking.openURL(SITE_URL + entry[1].url)
-                          }>
-                          <Text
-                            style={{
-                              fontFamily: 'Poppins',
-                              color: '#5C5C5C',
-                            }}>
-                            <IconF name="link" color="#94a3b8" size={12} />{' '}
-                            {entry[1].filename}
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    ))}
+                  <View style={{ ...styles.txtItem, marginTop: 8 }}>
+                    {Object.entries(data.assignment_answer.file).map(
+                      (entry) => (
+                        <View
+                          key={entry[0]}
+                          style={{
+                            flexDirection: 'row',
+                            paddingBottom: 5,
+                          }}
+                        >
+                          <TouchableOpacity
+                            onPress={() =>
+                              Linking.openURL(SITE_URL + entry[1].url)
+                            }
+                          >
+                            <Text
+                              style={{
+                                fontFamily: 'GolosText-Regular',
+                                color: '#5C5C5C',
+                              }}
+                            >
+                              <IconF name="link" color="#94a3b8" size={12} />{' '}
+                              {entry[1].filename}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      )
+                    )}
                   </View>
                 </View>
               ) : null}
 
               {/* Instructor's message */}
               {data.evaluation?.instructor_note ? (
-                <View style={{marginBottom: 8}}>
+                <View style={{ marginBottom: 8 }}>
                   <Text style={styles.lable}>
                     {t('learningScreen.assignment.instructorMessage')}
                   </Text>
-                  <Text style={{...styles.txtItem, marginTop: 8}}>
+                  <Text style={{ ...styles.txtItem, marginTop: 8 }}>
                     {data.evaluation?.instructor_note}
                   </Text>
                 </View>
@@ -392,23 +402,25 @@ export default function Assignment({navigation, id, onFinishCourse}) {
 
               {/* References */}
               {data.evaluation?.reference_files?.length > 0 ? (
-                <View style={{marginBottom: 8}}>
+                <View style={{ marginBottom: 8 }}>
                   <Text style={styles.lable}>
                     {t('learningScreen.assignment.references')}
                   </Text>
-                  <View style={{...styles.txtItem, marginTop: 8}}>
-                    {data.evaluation.reference_files.map(referenceFile => (
-                      <View key={referenceFile.id} style={{marginBottom: 4}}>
+                  <View style={{ ...styles.txtItem, marginTop: 8 }}>
+                    {data.evaluation.reference_files.map((referenceFile) => (
+                      <View key={referenceFile.id} style={{ marginBottom: 4 }}>
                         <TouchableOpacity
                           onPress={() =>
                             Linking.openURL(referenceFile?.url || '')
-                          }>
+                          }
+                        >
                           <Text
                             style={{
-                              fontFamily: 'Poppins',
+                              fontFamily: 'GolosText-Regular',
                               color: '#5C5C5C',
                               fontSize: 14,
-                            }}>
+                            }}
+                          >
                             <IconF name="link" color="#94a3b8" size={12} />{' '}
                             {referenceFile.name}
                           </Text>
@@ -425,7 +437,8 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                }}>
+                }}
+              >
                 {/* Retake */}
                 {data.retake_count > data.retaken && (
                   <TouchableOpacity style={styles.btnRetake} onPress={onRetake}>
@@ -441,7 +454,8 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                 {data?.can_finish_course && (
                   <TouchableOpacity
                     style={styles.btnFinishCourse}
-                    onPress={onFinishCourse}>
+                    onPress={onFinishCourse}
+                  >
                     <Text style={styles.txtFinishCourse}>
                       {t('learningScreen.finishCourse')}
                     </Text>
@@ -469,7 +483,7 @@ export default function Assignment({navigation, id, onFinishCourse}) {
               <RenderDataHTML html={data?.content || ''} />
 
               {/* Attachment */}
-              <View style={{...styles.viewFlex, marginBottom: 10}}>
+              <View style={{ ...styles.viewFlex, marginBottom: 10 }}>
                 <Text style={styles.lable}>
                   {t('learningScreen.assignment.attachments')}
                 </Text>
@@ -480,7 +494,8 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                           key={item.id || index}
                           onPress={() =>
                             item?.url ? Linking.openURL(item.url) : null
-                          }>
+                          }
+                        >
                           <IconF name="link" color="#94a3b8" size={12} />{' '}
                           {item.id
                             ? item.name
@@ -504,7 +519,7 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                   autoCorrect={false}
                   autoCapitalize="none"
                   underlineColorAndroid="transparent"
-                  onChangeText={value => setNote(value)}
+                  onChangeText={(value) => setNote(value)}
                 />
               </View>
 
@@ -512,7 +527,8 @@ export default function Assignment({navigation, id, onFinishCourse}) {
               <View style={styles.viewChooseFile}>
                 <TouchableOpacity
                   onPress={onChooseFile}
-                  style={styles.btnChoose}>
+                  style={styles.btnChoose}
+                >
                   <Text style={styles.txtChoose}>
                     {t('learningScreen.assignment.chooseFile')}
                   </Text>
@@ -521,7 +537,8 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                   style={{
                     flex: 1,
                     marginLeft: 8,
-                  }}>
+                  }}
+                >
                   {files.length > 0 ? (
                     files.map((file, index) => (
                       <View
@@ -530,7 +547,8 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                           flexWrap: 'wrap',
                           alignItems: 'center',
                         }}
-                        key={file?.id || index}>
+                        key={file?.id || index}
+                      >
                         <TouchableOpacity>
                           <IconF
                             name="x"
@@ -545,12 +563,13 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                         </TouchableOpacity>
                         <Text
                           style={{
-                            fontFamily: 'Poppins',
+                            fontFamily: 'GolosText-Regular',
                             fontSize: 12,
                             marginLeft: 5,
                             color: '#334155',
                           }}
-                          key={file?.id || index}>
+                          key={file?.id || index}
+                        >
                           {file.name ||
                             t('learningScreen.assignment.missingAttachment')}
                         </Text>
@@ -571,15 +590,16 @@ export default function Assignment({navigation, id, onFinishCourse}) {
               </Text>
 
               {Object.keys(answerFiles).length > 0 ? (
-                <View style={{...styles.txtItem, marginTop: 10}}>
-                  {Object.entries(answerFiles).map(entry => (
+                <View style={{ ...styles.txtItem, marginTop: 10 }}>
+                  {Object.entries(answerFiles).map((entry) => (
                     <View
                       key={entry[0]}
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
                         paddingBottom: 5,
-                      }}>
+                      }}
+                    >
                       <TouchableOpacity
                         style={{
                           marginRight: 5,
@@ -607,19 +627,21 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                                 onPress: () => onDeleteFile(entry[0]),
                               },
                             ],
-                            {cancelable: false},
+                            { cancelable: false }
                           );
-                        }}>
+                        }}
+                      >
                         <IconF name="trash" color="#dc2626" size={12} />
                       </TouchableOpacity>
                       <Text
                         style={{
-                          fontFamily: 'Poppins',
+                          fontFamily: 'GolosText-Regular',
                           color: '#334155',
                           fontSize: 13,
                           flex: 1,
                         }}
-                        numberOfLines={1}>
+                        numberOfLines={1}
+                      >
                         {entry[1].filename}
                       </Text>
                     </View>
@@ -632,14 +654,16 @@ export default function Assignment({navigation, id, onFinishCourse}) {
                 <View style={styles.viewBtn}>
                   <TouchableOpacity
                     style={styles.btnSend}
-                    onPress={() => onSubmit('save')}>
+                    onPress={() => onSubmit('save')}
+                  >
                     <Text style={styles.txtBtnSend}>
                       {t('learningScreen.assignment.save')}
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.btnSend}
-                    onPress={() => onSubmit('send')}>
+                    onPress={() => onSubmit('send')}
+                  >
                     <Text style={styles.txtBtnSend}>
                       {t('learningScreen.assignment.send')}
                     </Text>
@@ -649,10 +673,11 @@ export default function Assignment({navigation, id, onFinishCourse}) {
 
               {/* Finish course */}
               {data?.can_finish_course && (
-                <View style={{marginTop: 20}}>
+                <View style={{ marginTop: 20 }}>
                   <TouchableOpacity
                     style={styles.btnFinishCourse}
-                    onPress={onFinishCourse}>
+                    onPress={onFinishCourse}
+                  >
                     <Text style={styles.txtFinishCourse}>
                       {t('learningScreen.finishCourse')}
                     </Text>

@@ -51,7 +51,7 @@ export default StyleSheet.create({
     fontFamily: 'Sniglet-Regular',
   },
   childTitle: {
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     lineHeight: 21,
     fontSize: 13,
     color: '#858585',
@@ -77,7 +77,7 @@ export default StyleSheet.create({
     borderRadius: 4,
     marginBottom: 16,
     paddingHorizontal: 15,
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 14,
   },
   button: {
@@ -97,7 +97,7 @@ export default StyleSheet.create({
     resizeMode: 'contain',
   },
   txtAccept: {
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 13,
     color: '#9E9E9E',
     fontWeight: '400',
@@ -144,7 +144,7 @@ export default StyleSheet.create({
   },
   txtForgot: {
     marginTop: 24,
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     textAlign: 'center',
     fontSize: 16,
     color: '#000',

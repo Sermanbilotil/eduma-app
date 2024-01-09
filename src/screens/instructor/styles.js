@@ -63,7 +63,7 @@ export default StyleSheet.create({
     zIndex: -1,
   },
   title: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontWeight: '500',
     fontSize: 24,
     lineHeight: 36,
@@ -164,7 +164,7 @@ export default StyleSheet.create({
     marginLeft: 16,
   },
   txtTitle: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 15,
     color: '#000',
     fontWeight: '500',

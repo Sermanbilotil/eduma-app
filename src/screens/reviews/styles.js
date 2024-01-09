@@ -37,7 +37,7 @@ export default StyleSheet.create({
     marginLeft: 16,
   },
   title: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontWeight: '500',
     fontSize: 20,
     lineHeight: 36,
@@ -45,7 +45,7 @@ export default StyleSheet.create({
   dataNotFound: {
     marginTop: 50,
     alignSelf: 'center',
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 12,
     lineHeight: 15,
     color: '#64748b',
@@ -56,14 +56,14 @@ export default StyleSheet.create({
   },
   txtNameRating: {
     flex: 1,
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 13,
     lineHeight: 16,
     color: '#777',
     marginTop: 0,
   },
   titleRating: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 13,
     lineHeight: 20,
     color: '#000000',

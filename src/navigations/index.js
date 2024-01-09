@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import {PixelRatio, Platform, Dimensions} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomTabNavigator from './bottom-tab';
@@ -14,12 +14,10 @@ import CoursesDetails from '../screens/courses-details';
 import Learning from '../screens/learning';
 import FinishLearning from '../screens/finish-learning';
 import instructor from '../screens/instructor';
+import OnboardingScreen from '../screens/onboarding/OnboardingScreen'
 import notifications from '../screens/notifications';
 import Reviews from '../screens/reviews';
-import GeneralSetting from '../screens/settings/general';
-import PasswordSetting from '../screens/settings/password';
-import DeleteAccountSetting from '../screens/settings/delete-account';
-import LanguageSetting from '../screens/settings/language';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const {width} = Dimensions.get('window');
 
@@ -49,57 +47,89 @@ const headerTitleStyle = {
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
-  return (
-    <Stack.Navigator
-      initialRouteName="HomeTabScreen"
-      presentation="card"
-      screenOptions={{
-        gesturesEnabled: true,
-        headerTintColor: '#000',
-        headerBackTitle: '',
-        headerStyle,
-        headerTitleStyle,
-        headerShown: false,
-      }}>
-      <Stack.Screen name="HomeTabScreen" component={BottomTabNavigator} />
-      <Stack.Screen name="LoginScreen" component={Login} />
-      <Stack.Screen name="RegisterScreen" component={Register} />
-      <Stack.Screen name="SettingsScreen" component={SettingsStack} />
-      <Stack.Screen name="ForgotScreen" component={Forgot} />
-      <Stack.Screen name="YourOrderScreen" component={YourOrder} />
-      <Stack.Screen name="YourCoursesScreen" component={YourCourses} />
-      <Stack.Screen name="CoursesSearchScreen" component={CoursesSearch} />
-      <Stack.Screen name="CoursesDetailsScreen" component={CoursesDetails} />
-      <Stack.Screen name="LearningScreen" component={Learning} />
-      <Stack.Screen name="FinishLearningScreen" component={FinishLearning} />
-      <Stack.Screen name="InstructorScreen" component={instructor} />
-      <Stack.Screen name="NotificationsScreen" component={notifications} />
-      <Stack.Screen name="ReviewsScreen" component={Reviews} />
-    </Stack.Navigator>
-  );
-}
 
-function SettingsStack() {
-  return (
-    <Stack.Navigator
-      initialRouteName="ParentSettingsScreen"
-      presentation="card"
-      screenOptions={{
-        gesturesEnabled: true,
-        headerTintColor: '#000',
-        headerBackTitle: '',
-        headerStyle,
-        headerTitleStyle,
-        headerShown: false,
-      }}>
-      <Stack.Screen name="ParentSettingsScreen" component={Settings} />
-      <Stack.Screen name="GeneralScreen" component={GeneralSetting} />
-      <Stack.Screen name="PasswordScreen" component={PasswordSetting} />
-      <Stack.Screen
-        name="DeleteAccountScreen"
-        component={DeleteAccountSetting}
-      />
-      <Stack.Screen name="LanguageScreen" component={LanguageSetting} />
-    </Stack.Navigator>
-  );
+  const [showOnboarding, setShowOnboarding] = useState(null);
+
+  useEffect(()=>{
+    checkOnboarding();
+  },[])
+
+  const checkOnboarding = async () => {
+    let onboarded = await AsyncStorage.getItem('onboarding');
+    console.log('onboard', onboarded, onboarded == '1')
+    if (onboarded == '1') {
+      // hide onboarding
+      setShowOnboarding(false);
+    } else {
+      // show onboarding
+      setShowOnboarding(true);
+    }
+  }
+
+  if(showOnboarding==null){
+    return null;
+  }
+
+  if(showOnboarding) {
+    return (
+      <Stack.Navigator
+        initialRouteName="OnboardingScreen"
+        presentation="card"
+        screenOptions={{
+          gesturesEnabled: true,
+          headerTintColor: '#000',
+          headerBackTitle: '',
+          headerStyle,
+          headerTitleStyle,
+          headerShown: false,
+        }}>
+        <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+        <Stack.Screen name="HomeTabScreen" component={BottomTabNavigator} />
+        <Stack.Screen name="LoginScreen" component={Login} />
+        <Stack.Screen name="RegisterScreen" component={Register} />
+        <Stack.Screen name="SettingsScreen" component={Settings} />
+        <Stack.Screen name="ForgotScreen" component={Forgot} />
+        <Stack.Screen name="YourOrderScreen" component={YourOrder} />
+        <Stack.Screen name="YourCoursesScreen" component={YourCourses} />
+        <Stack.Screen name="CoursesSearchScreen" component={CoursesSearch} />
+        <Stack.Screen name="CoursesDetailsScreen" component={CoursesDetails} />
+        <Stack.Screen name="LearningScreen" component={Learning} />
+        <Stack.Screen name="FinishLearningScreen" component={FinishLearning} />
+        <Stack.Screen name="InstructorScreen" component={instructor} />
+        <Stack.Screen name="NotificationsScreen" component={notifications} />
+        <Stack.Screen name="ReviewsScreen" component={Reviews} />
+      </Stack.Navigator>
+    );
+  } else {
+    return (
+      <Stack.Navigator
+        initialRouteName="HomeTabScreen"
+        presentation="card"
+        screenOptions={{
+          gesturesEnabled: true,
+          headerTintColor: '#000',
+          headerBackTitle: '',
+          headerStyle,
+          headerTitleStyle,
+          headerShown: false,
+        }}>
+        <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+        <Stack.Screen name="HomeTabScreen" component={BottomTabNavigator} />
+        <Stack.Screen name="LoginScreen" component={Login} />
+        <Stack.Screen name="RegisterScreen" component={Register} />
+        <Stack.Screen name="SettingsScreen" component={Settings} />
+        <Stack.Screen name="ForgotScreen" component={Forgot} />
+        <Stack.Screen name="YourOrderScreen" component={YourOrder} />
+        <Stack.Screen name="YourCoursesScreen" component={YourCourses} />
+        <Stack.Screen name="CoursesSearchScreen" component={CoursesSearch} />
+        <Stack.Screen name="CoursesDetailsScreen" component={CoursesDetails} />
+        <Stack.Screen name="LearningScreen" component={Learning} />
+        <Stack.Screen name="FinishLearningScreen" component={FinishLearning} />
+        <Stack.Screen name="InstructorScreen" component={instructor} />
+        <Stack.Screen name="NotificationsScreen" component={notifications} />
+        <Stack.Screen name="ReviewsScreen" component={Reviews} />
+      </Stack.Navigator>
+    );
+  }
+
 }

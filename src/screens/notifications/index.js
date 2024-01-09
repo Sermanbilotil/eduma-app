@@ -1,155 +1,89 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  RefreshControl,
-  FlatList,
-  ActivityIndicator,
-  Linking,
-} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {Client} from 'app-api';
 import {useTranslation} from 'react-i18next';
 import notifee from '@notifee/react-native';
-import {useSelector, useDispatch} from 'react-redux';
 import {Images} from 'app-assets';
-import {
-  saveNotifications as saveStoreNotifications,
-  setLastIDNotifications,
-} from '../../actions/notifications';
 import styles from './styles';
+import ListNotifications from '../../component/list/list-notification';
 
 export default function Notifications({navigation}) {
   const {t} = useTranslation();
-  const dispatch = useDispatch();
-
-  const notifications = useSelector(state => state.notifications);
-
-  const [lastID, setLastId] = useState(null);
 
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [showFooter, setShowFooter] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
+  const [refreshing, setRefreshing] = useState(true);
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
-  const [isScrollEnd, setIsScrollEnd] = useState(false);
 
   useEffect(() => {
-    setLastId(notifications?.lastID || 0);
-
-    if (notifications?.list.length > 0) {
-      saveNotifications(notifications?.list);
-    }
-
-    fetchNotifications();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        if (page > totalPages) {
-          return;
-        }
-
-        if (!loadingMore && !refreshing) {
-          return;
-        }
-
-        if (loadingMore) {
-          setShowFooter(true);
-        }
-
-        await fetchNotifications();
-      } catch (e) {
-        setError(e.message || t('reviews.error'));
-      }
-
-      setRefreshing(false);
-      setLoadingMore(false);
-      setShowFooter(false);
-    })();
-
+    getNotifications();
     notifee.setBadgeCount(0);
-  }, [refreshing, loadingMore]);
-
-  function saveNotifications(data) {
-    setData(data);
-    dispatch(saveStoreNotifications(data || []));
-    dispatch(setLastIDNotifications(data[0]?.notification_id || 0));
-  }
-
-  async function fetchNotifications() {
-    const response = await Client.getNotifications({
-      per_page: 20,
-      page,
-    });
-
-    if (response?.success) {
-      if (page === 1) {
-        saveNotifications(response?.data?.notifications || []);
-      } else {
-        saveNotifications(data.concat(response?.data?.notifications || []));
-      }
-      if (response?.data?.total) {
-        setTotalPages(Math.ceil(response?.data?.total / 15));
-      }
-    } else {
-      saveNotifications([]);
-    }
-  }
-
-  const handleRefresh = React.useCallback(async () => {
-    saveNotifications([]);
-    setRefreshing(true);
-    setLoadingMore(false);
-    setPage(1);
   }, []);
 
-  function handleLoadMore(d) {
-    if (!isScrollEnd) {
+  const refreshScreen = () => {
+    setRefreshing(true);
+    setPage(1);
+
+    getNotifications();
+
+    setRefreshing(false);
+  };
+
+  const getNotifications = async () => {
+    try {
+      const response = await Client.getNotifications();
+
+      if (response.success) {
+        const {data: notifications, total_pages: total} = response;
+
+        if (page === 1) {
+          setData(notifications);
+        } else {
+          setData(data.concat(notifications));
+        }
+        setTotalPages(total);
+      } else {
+        setData([]);
+      }
+    } catch (e) {
+      setError(e.message || t('notification.error'));
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const loadMore = async () => {
+    if (page >= totalPages) {
       return;
     }
 
-    if (loadingMore || refreshing) {
-      return;
-    }
-
-    if (!data || data.length <= 0) {
-      return;
-    }
-
-    setLoadingMore(true);
+    setShowFooter(true);
     setPage(page + 1);
 
-    setIsScrollEnd(false);
-  }
+    getNotifications();
+
+    setShowFooter(false);
+  };
 
   const renderItem = ({item}) => {
     return (
-      <TouchableOpacity
-        onPress={() => (item?.source ? Linking.openURL(item.source) : null)}
-        style={[
-          styles.itemContainer,
-          {
-            backgroundColor:
-              item?.notification_id && parseInt(item.notification_id) > lastID
-                ? '#f1f5f9'
-                : '#fff',
-          },
-        ]}>
+      <TouchableOpacity style={styles.itemContainer}>
         {item.image && (
-          <FastImage source={{uri: item.image}} style={styles.itemImage} />
+          <Image
+            source={{
+              uri: item.image,
+            }}
+            style={styles.itemImage}
+          />
         )}
         <View style={styles.itemContentContainer}>
           {item.title ? (
             <Text style={styles.itemTitle}>{item.title}</Text>
           ) : null}
           <Text style={styles.itemContent}>{item.content}</Text>
-          <Text style={styles.itemTime}>{item.date_created || ''}</Text>
+          <Text style={styles.itemTime}>{item.time}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -186,44 +120,15 @@ export default function Notifications({navigation}) {
             </Text>
           ) : (
             <View style={styles.listContainer}>
-              <FlatList
-                contentContainerStyle={{paddingBottom: 30}}
-                removeClippedSubviews={false}
+              <ListNotifications
                 data={data}
                 renderItem={renderItem}
-                keyExtractor={(item, index) => index.toString()}
-                horizontal={false}
+                contentContainerStyle={{paddingBottom: 150}}
+                refreshScreen={refreshScreen}
                 refreshing={refreshing}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={handleRefresh}
-                    tintColor="#000"
-                    progressViewOffset={30}
-                  />
-                }
-                onEndReached={handleLoadMore}
-                onEndReachedThreshold={0.5}
-                onScrollBeginDrag={() => {
-                  setIsScrollEnd(true);
-                }}
-                onMomentumScrollBegin={() => {
-                  setIsScrollEnd(true);
-                }}
-                ListFooterComponent={() =>
-                  showFooter ? (
-                    <View
-                      style={{
-                        height: 50,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <ActivityIndicator size="small" color="#000" />
-                    </View>
-                  ) : null
-                }
-                scrollEnabled={true}
-                scrollEventThrottle={1}
+                nextPage={loadMore}
+                showFooter={showFooter}
+                scrollEnabled
               />
             </View>
           )}

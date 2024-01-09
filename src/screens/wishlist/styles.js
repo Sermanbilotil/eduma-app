@@ -1,5 +1,5 @@
-import {StyleSheet, Dimensions, Platform} from 'react-native';
-import {getStatusBarHeight} from 'app-common';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
+import { getStatusBarHeight } from 'app-common';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -41,7 +41,7 @@ export default StyleSheet.create({
   inputSearch: {
     flex: 1,
     marginRight: 8,
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 14,
     lineHeight: 21,
     color: '#000',
@@ -62,7 +62,7 @@ export default StyleSheet.create({
     zIndex: -1,
   },
   title: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontWeight: '500',
     fontSize: 24,
     lineHeight: 36,
@@ -112,7 +112,7 @@ export default StyleSheet.create({
     elevation: 10,
   },
   txtFilter: {
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 10,
     lineHeight: 15,
     marginRight: 4,
@@ -143,7 +143,7 @@ export default StyleSheet.create({
   },
   txtFilterItem: {
     marginBottom: 10,
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 10,
     lineHeight: 15,
     color: '#A9A9A9',

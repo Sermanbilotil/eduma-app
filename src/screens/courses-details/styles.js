@@ -45,20 +45,20 @@ export default StyleSheet.create({
     zIndex: -1,
   },
   title: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontWeight: '500',
     fontSize: 24,
     lineHeight: 36,
   },
   txt1: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 14,
     lineHeight: 21,
     color: '#C4C4C4',
     fontWeight: '500',
   },
   txt2: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 16,
     lineHeight: 24,
     color: '#fff',
@@ -138,7 +138,7 @@ export default StyleSheet.create({
     marginLeft: 4,
   },
   price: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 16,
     lineHeight: 24,
     color: '#000',
@@ -153,7 +153,7 @@ export default StyleSheet.create({
     marginLeft: 13,
   },
   txtTitle: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 18,
     lineHeight: 27,
     color: '#000',
@@ -167,7 +167,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   txtSubSection: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 16,
     lineHeight: 22,
     color: '#000',
@@ -177,7 +177,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   txtLength: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 16,
     lineHeight: 22,
     color: '#000',
@@ -185,7 +185,7 @@ export default StyleSheet.create({
     marginLeft: 10,
   },
   txtSubTitle: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 16,
     lineHeight: 22,
     color: '#000',
@@ -263,7 +263,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   txtRating: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 36,
     lineHeight: 54,
     color: '#FBC815',
@@ -279,7 +279,7 @@ export default StyleSheet.create({
     marginTop: 0,
   },
   titleRating: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 12,
     lineHeight: 20,
     color: '#000000',
@@ -308,7 +308,7 @@ export default StyleSheet.create({
     fontFamily: 'Poppins',
   },
   txtBuy: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 14,
     lineHeight: 21,
     color: '#000000',
@@ -326,7 +326,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   txtAddToCart: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 14,
     lineHeight: 21,
     color: '#FFFFFF',

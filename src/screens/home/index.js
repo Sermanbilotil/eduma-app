@@ -134,7 +134,7 @@ class Home extends PureComponent {
       loading4,
     } = this.state;
 
-    const {t, navigation, user, notifications} = this.props;
+    const {t, navigation, user} = this.props;
 
     return (
       <View style={styles.container}>
@@ -166,15 +166,11 @@ class Home extends PureComponent {
               <View>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('NotificationsScreen')}
-                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                  style={styles.iconNotification}>
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
                   <Image
                     source={Images.iconNotification}
                     style={styles.iconHeader}
                   />
-                  {notifications?.list[0]?.notification_id &&
-                    notifications.list[0].notification_id >
-                      notifications?.lastID && <View style={styles.dot} />}
                 </TouchableOpacity>
               </View>
             )}
@@ -329,12 +325,13 @@ class Home extends PureComponent {
           <View style={styles.viewList}>
             <View
               style={{
-                flexDirection: 'row',
+                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 marginRight: 15,
               }}>
               <Text style={styles.titleList}>{t('home.category')}</Text>
+
             </View>
             {dataCate && dataCate.length > 0 && (
               <LearnToday
@@ -417,9 +414,8 @@ class Home extends PureComponent {
     );
   }
 }
-const mapStateToProps = ({user, notifications}) => ({
+const mapStateToProps = ({user}) => ({
   user,
-  notifications,
 });
 const mapDispatchToProps = dispatch => ({dispatch});
 

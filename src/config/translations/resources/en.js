@@ -109,9 +109,7 @@ export default {
     general: 'General',
     password: 'Password',
     deleteAccount: 'Delete account',
-    language: 'Language',
     upload: 'Upload',
-    update: 'Update',
     bio: 'Biographical Info',
     firstName: 'First Name',
     lastName: 'Last Name',
@@ -133,7 +131,6 @@ export default {
     deleteAccountContent2: 'Please enter your password to confirm:',
     deleteAccountBtn: 'Delete',
     deleteAccountPasswordEmpty: 'Password is required',
-    languageUpdated: 'The language update was successful',
   },
   myOrders: {
     title: 'My Orders',
@@ -278,12 +275,5 @@ export default {
     title: 'Reviews',
     empty: 'No reviews',
     error: 'Error when get reviews',
-  },
-  notificationModal: {
-    title: 'Open notification settings',
-    description:
-      'You need to enable notifications to receive notifications from us and to use the app. Please go to your settings and enable notifications.',
-    openSettings: 'Open settings',
-    close: 'Close',
   },
 };

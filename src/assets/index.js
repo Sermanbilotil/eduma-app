@@ -39,8 +39,10 @@ const iconFacebook1 = require('./img/icon/icon-facebook1.png');
 const iconGoogle = require('./img/icon/icon-google.png');
 const iconGoogle2 = require('./img/icon/icon-google-2.png');
 const iconYoutube = require('./img/icon/icon-youtube.png');
+const iconPlay = require('./img/icon/play.png');
 const iconTwitter = require('./img/icon/icon-twitter.png');
 const iconTwitter2 = require('./img/icon/icon-twitter2.png');
+const iconTelegram = require('./img/icon/telegram.png');
 const iconCall = require('./img/icon/icon-call.png');
 const iconInstagram = require('./img/icon/icon-instagram.png');
 const icEnterUsername = require('./img/icon/icon-enter-username.png');
@@ -82,6 +84,7 @@ const Images = {
   iconGoogle,
   iconTwitter,
   iconTwitter2,
+  iconTelegram,
   bannerHome,
   iconHome,
   iconAssignment,
@@ -94,6 +97,7 @@ const Images = {
   iconStudent,
   iconLanguage,
   iconYoutube,
+  iconPlay,
   iconGoogle2,
   iconMenu,
   iconClose,

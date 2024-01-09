@@ -28,8 +28,8 @@ export default StyleSheet.create({
     zIndex: -1,
   },
   iconHome: {
-    width: 115,
-    height: 30,
+    width: 60,
+    height: 60,
     resizeMode: 'contain',
   },
   iconHeader: {
@@ -37,7 +37,6 @@ export default StyleSheet.create({
     height: 20,
     resizeMode: 'contain',
     marginLeft: 10,
-    marginRight: 6,
   },
   imgBottom: {
     width: deviceWidth,
@@ -90,7 +89,7 @@ export default StyleSheet.create({
     borderRadius: 4,
     marginBottom: 16,
     paddingHorizontal: 15,
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 14,
   },
   button: {
@@ -119,13 +118,13 @@ export default StyleSheet.create({
     color: '#000',
     lineHeight: 24,
     fontWeight: '500',
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
   },
   email: {
     fontSize: 13,
     color: '#929292',
     lineHeight: 19,
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
   },
   overview: {
     paddingHorizontal: 30,
@@ -149,7 +148,7 @@ export default StyleSheet.create({
     fontSize: 14,
     color: '#000',
     lineHeight: 21,
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
   },
   viewItem: {
     flexDirection: 'row',
@@ -163,7 +162,7 @@ export default StyleSheet.create({
     marginRight: 13,
   },
   txtItem: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontWeight: '500',
     fontSize: 10,
   },
@@ -178,7 +177,7 @@ export default StyleSheet.create({
     height: 4,
   },
   txt1: {
-    fontFamily: 'Poppins',
+    fontFamily: 'GolosText-Regular',
     fontSize: 12,
     lineHeight: 18,
     color: '#929292',
@@ -187,7 +186,7 @@ export default StyleSheet.create({
     // paddingHorizontal: 16,
   },
   titleList: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 16,
     lineHeight: 24,
     color: '#000',
@@ -195,6 +194,7 @@ export default StyleSheet.create({
     marginLeft: 16,
     marginVertical: 25,
   },
+
   txtAllSource: {
     fontFamily: 'Poppins-ExtraLight',
     fontSize: 13,
@@ -208,21 +208,12 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
   },
   loginRegisterText: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 14,
   },
   loginRegisterIcon: {
     color: '#000',
     fontWeight: '500',
     marginHorizontal: 5,
-  },
-  dot: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#ef4444',
   },
 });

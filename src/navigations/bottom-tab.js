@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/no-unstable-nested-components */
 import * as React from 'react';
 import {View, Image, Dimensions, Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -12,66 +10,49 @@ import Courses from '../screens/courses';
 import MyCourse from '../screens/my-course';
 import Wishlist from '../screens/wishlist';
 import Profile from '../screens/profile';
+import Settings from '../screens/settings/index';
 import YourOrder from '../screens/your-order';
 import YourCourses from '../screens/your-courses';
-import {useSelector} from 'react-redux';
-import i18n from '../config/translations';
 
 const deviceWidth = Dimensions.get('window').width;
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const TAB_SCREENS = [
+  {
+    name: 'HomeScreen',
+    component: Home,
+    icon: Images.iconTabHome,
+    label: i18next.t('bottomNavigation.home'),
+  },
+  {
+    name: 'Courses',
+    component: Courses,
+    icon: Images.iconTabCoures,
+    label: i18next.t('bottomNavigation.courses'),
+  },
+  {
+    name: 'MyCourse',
+    component: MyCourse,
+    icon: Images.iconTabMyCourse,
+    label: i18next.t('bottomNavigation.myCourse'),
+  },
+  {
+    name: 'Wishlist',
+    component: Wishlist,
+    icon: Images.iconWishlist,
+    label: i18next.t('bottomNavigation.wishlist'),
+  },
+  {
+    name: 'ProfileStackScreen',
+    component: ProfileStack,
+    icon: Images.iconTabProfile,
+    label: i18next.t('bottomNavigation.profile'),
+  },
+];
+
 export default function BottomTabNavigator() {
-  const [isInitialRender, setIsInitialRender] = React.useState(false);
-  const {language} = useSelector(state => state.language);
-
-  React.useEffect(() => {
-    if (!isInitialRender) {
-      i18n.changeLanguage(language);
-
-      const timeoutId = setTimeout(() => {
-        setIsInitialRender(true);
-      }, 200);
-
-      return () => clearTimeout(timeoutId);
-    } else {
-      i18n.changeLanguage(language);
-    }
-  }, [language, isInitialRender]);
-
-  const TAB_SCREENS = [
-    {
-      name: 'HomeScreen',
-      component: Home,
-      icon: Images.iconTabHome,
-      label: i18next.t('bottomNavigation.home'),
-    },
-    {
-      name: 'Courses',
-      component: Courses,
-      icon: Images.iconTabCoures,
-      label: i18next.t('bottomNavigation.courses'),
-    },
-    {
-      name: 'MyCourse',
-      component: MyCourse,
-      icon: Images.iconTabMyCourse,
-      label: i18next.t('bottomNavigation.myCourse'),
-    },
-    {
-      name: 'Wishlist',
-      component: Wishlist,
-      icon: Images.iconWishlist,
-      label: i18next.t('bottomNavigation.wishlist'),
-    },
-    {
-      name: 'ProfileStackScreen',
-      component: ProfileStack,
-      icon: Images.iconTabProfile,
-      label: i18next.t('bottomNavigation.profile'),
-    },
-  ];
   return (
     <Tab.Navigator
       initialRouteName="HomeScreen"
@@ -133,6 +114,7 @@ function ProfileStack() {
         headerShown: false,
       }}>
       <Stack.Screen name="ProfileScreen" component={Profile} />
+      <Stack.Screen name="SettingsScreen" component={Settings} />
       <Stack.Screen name="YourOrderScreen" component={YourOrder} />
       <Stack.Screen name="YourCoursesScreen" component={YourCourses} />
     </Stack.Navigator>
@@ -143,7 +125,7 @@ function TabBarLabel({focused, color, label, position}) {
   return (
     <Text
       style={{
-        fontSize: deviceWidth < 600 ? 10 : 12,
+        fontSize: 10,
         lineHeight: 15,
         textAlign: 'center',
         color: color || '#D1D1D1',

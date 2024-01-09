@@ -67,7 +67,7 @@ export default StyleSheet.create({
     zIndex: -1,
   },
   title: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontWeight: '500',
     fontSize: 24,
     lineHeight: 36,
@@ -81,7 +81,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   txtBtn: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontWeight: '500',
     fontSize: 12,
     lineHeight: 18,
@@ -227,7 +227,7 @@ export default StyleSheet.create({
     padding: 5,
   },
   txtTitleCol: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 12,
     lineHeight: 18,
     color: '#fff',

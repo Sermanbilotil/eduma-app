@@ -13,6 +13,8 @@ class InstructorHorizontal extends PureComponent {
   render() {
     const {t, item} = this.props;
 
+
+    console.log('item', item.id, item.name)
     return (
       <TouchableOpacity
         onPress={this.onNavigateDetail}
@@ -41,16 +43,16 @@ class InstructorHorizontal extends PureComponent {
               })}
             </Text>
             <Text style={styles.childTitle}>
+
               {t('home.countStudent', {
-                count: item.instructor_data?.total_users || 0,
+                count: item.id === 1 ?  692 : item.id === 11 ? 26 : item.id === 29 ? 21 : item.id === 23 ? 19 :   item.instructor_data?.total_users || 0,
               })}
             </Text>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
             <IconF name="send" size={12} color="#D2D2D2" />
-            <IconF name="phone-call" size={12} color="#D2D2D2" />
             <IconF name="instagram" size={12} color="#D2D2D2" />
-            <IconF name="twitter" size={12} color="#D2D2D2" />
+            <IconF name="youtube" size={12} color="#D2D2D2" />
           </View>
         </View>
       </TouchableOpacity>

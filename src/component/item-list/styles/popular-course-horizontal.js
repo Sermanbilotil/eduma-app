@@ -34,7 +34,7 @@ export default StyleSheet.create({
     backgroundColor: '#E5E5E5',
   },
   price: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 10,
     lineHeight: 15,
     color: '#000',
@@ -49,7 +49,7 @@ export default StyleSheet.create({
     marginLeft: 13,
   },
   rate: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 10,
     lineHeight: 15,
     color: '#fff',
@@ -58,7 +58,7 @@ export default StyleSheet.create({
     marginTop: 2,
   },
   title: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'GolosText-Medium',
     fontSize: 12,
     lineHeight: 18,
     color: '#000',

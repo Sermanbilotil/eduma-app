@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -12,11 +12,11 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import {withTranslation} from 'react-i18next';
-import {connect} from 'react-redux';
-import {ListMyCourse} from 'app-component';
-import {Client} from 'app-api';
-import {Images} from 'app-assets';
+import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
+import { ListMyCourse } from 'app-component';
+import { Client } from 'app-api';
+import { Images } from 'app-assets';
 import IconI from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 
@@ -51,21 +51,21 @@ class MyCourse extends Component {
   }
 
   async componentDidMount() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     this.focusListener = navigation.addListener('focus', async () => {
       if (this.isFetchData) {
         await this.getData();
       }
-      this.setState({refreshing: false});
+      this.setState({ refreshing: false });
       this.isFetchData = false;
     });
     this.backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
-      this.handleBackPress,
+      this.handleBackPress
     );
     this.eventListener = DeviceEventEmitter.addListener(
       'loadMyCourse',
-      this.refreshMyCourse,
+      this.refreshMyCourse
     );
   }
 
@@ -86,18 +86,18 @@ class MyCourse extends Component {
   };
 
   handleBackPress = () => {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     navigation.goBack(null);
     return true;
   };
 
   goBack = () => {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     navigation.goBack();
   };
 
   async getData() {
-    const {filter, keySearch, page} = this.state;
+    const { filter, keySearch, page } = this.state;
     const param = {
       page,
       per_page: 10,
@@ -123,17 +123,17 @@ class MyCourse extends Component {
   }
 
   showFilter = () => {
-    const {isShowFilter, refreshing, loading} = this.state;
+    const { isShowFilter, refreshing, loading } = this.state;
 
     if (refreshing || loading) {
       return;
     }
 
-    this.setState({isShowFilter: !isShowFilter});
+    this.setState({ isShowFilter: !isShowFilter });
   };
 
   onAnimatedSearch = () => {
-    this.setState({showAnimatedSearh: true});
+    this.setState({ showAnimatedSearh: true });
 
     setTimeout(() => {
       this.inputSearch.focus();
@@ -141,7 +141,7 @@ class MyCourse extends Component {
   };
 
   handleLoadMore = async () => {
-    const {page, isLoadMore} = this.state;
+    const { page, isLoadMore } = this.state;
 
     if (!isLoadMore) {
       return;
@@ -165,11 +165,11 @@ class MyCourse extends Component {
       loading: false,
     });
     await this.getData();
-    this.setState({refreshing: false});
+    this.setState({ refreshing: false });
   };
 
   refreshScreen() {
-    const {refreshing} = this.state;
+    const { refreshing } = this.state;
 
     return (
       <RefreshControl
@@ -194,7 +194,7 @@ class MyCourse extends Component {
   }
 
   async onSearch() {
-    const {refreshing, loading} = this.state;
+    const { refreshing, loading } = this.state;
 
     if (loading || refreshing) {
       return;
@@ -212,7 +212,7 @@ class MyCourse extends Component {
   }
 
   async onCloseSearch() {
-    const {refreshing, loading} = this.state;
+    const { refreshing, loading } = this.state;
 
     if (loading || refreshing) {
       return;
@@ -242,7 +242,7 @@ class MyCourse extends Component {
       loading,
     } = this.state;
 
-    const {t, navigation, user} = this.props;
+    const { t, navigation, user } = this.props;
 
     return (
       <View style={styles.container}>
@@ -252,23 +252,25 @@ class MyCourse extends Component {
             <View style={styles.viewInput}>
               <TouchableOpacity
                 hitSlop={hitSlop}
-                style={{marginRight: 16}}
-                onPress={() => this.onCloseSearch()}>
+                style={{ marginRight: 16 }}
+                onPress={() => this.onCloseSearch()}
+              >
                 <Image source={Images.iconBack} style={styles.iconBack} />
               </TouchableOpacity>
               <TextInput
                 style={styles.inputSearch}
-                ref={ref => {
+                ref={(ref) => {
                   this.inputSearch = ref;
                 }}
-                onChangeText={value => this.setState({keySearch: value})}
+                onChangeText={(value) => this.setState({ keySearch: value })}
                 onSubmitEditing={() => this.onSearch()}
                 returnKeyType="search"
               />
               <TouchableOpacity
                 hitSlop={hitSlop}
                 onPress={() => this.onSearch()}
-                disabled={loading || refreshing}>
+                disabled={loading || refreshing}
+              >
                 <Image source={Images.iconSearch} style={styles.iconSearch} />
               </TouchableOpacity>
             </View>
@@ -278,7 +280,8 @@ class MyCourse extends Component {
               {user?.token ? (
                 <TouchableOpacity
                   style={styles.viewSearch}
-                  onPress={this.onAnimatedSearch}>
+                  onPress={this.onAnimatedSearch}
+                >
                   <Image source={Images.iconSearch} style={styles.iconSearch} />
                 </TouchableOpacity>
               ) : null}
@@ -293,12 +296,14 @@ class MyCourse extends Component {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 marginHorizontal: 16,
-              }}>
+              }}
+            >
               <View />
               <View>
                 <TouchableOpacity
                   onPress={this.showFilter}
-                  style={styles.viewFilter}>
+                  style={styles.viewFilter}
+                >
                   {filter === '' && (
                     <Text style={styles.txtFilter}>
                       {t('myCourse.filters.filter')}
@@ -322,7 +327,7 @@ class MyCourse extends Component {
                       {t('myCourse.filters.failed')}
                     </Text>
                   )}
-                  <IconI name="caret-down" color="#C5C5C5" size={8} />
+                  <IconI name="ios-caret-down" color="#C5C5C5" size={8} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -336,8 +341,9 @@ class MyCourse extends Component {
               <Text
                 style={[
                   styles.txtFilterItem,
-                  {alignSelf: 'center', marginTop: 50},
-                ]}>
+                  { alignSelf: 'center', marginTop: 50 },
+                ]}
+              >
                 {t('dataNotFound')}
               </Text>
             )}
@@ -345,8 +351,8 @@ class MyCourse extends Component {
             <ListMyCourse
               navigation={navigation}
               data={data}
-              style={{marginTop: 20}}
-              contentContainerStyle={{paddingBottom: 150}}
+              style={{ marginTop: 20 }}
+              contentContainerStyle={{ paddingBottom: 150 }}
               refreshScreen={this.refreshScreen()}
               nextPage={this.handleLoadMore}
               refreshing={refreshing}
@@ -355,15 +361,17 @@ class MyCourse extends Component {
             {isShowFilter && (
               <TouchableWithoutFeedback
                 onPress={() => {
-                  this.setState({isShowFilter: false});
-                }}>
+                  this.setState({ isShowFilter: false });
+                }}
+              >
                 <View style={[styles.viewUpdateRole]}>
                   <TouchableWithoutFeedback>
                     <View
                       style={[
                         styles.viewModalFilter,
-                        {right: -deviceWidth + 107 + 16, top: 150},
-                      ]}>
+                        { right: -deviceWidth + 107 + 16, top: 150 },
+                      ]}
+                    >
                       <TouchableOpacity onPress={() => this.onFilter('all')}>
                         <Text style={styles.txtFilterItem}>
                           {' '}
@@ -371,7 +379,8 @@ class MyCourse extends Component {
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={() => this.onFilter('in-progress')}>
+                        onPress={() => this.onFilter('in-progress')}
+                      >
                         <Text style={styles.txtFilterItem}>
                           {' '}
                           {t('myCourse.filters.inProgress')}
@@ -401,14 +410,16 @@ class MyCourse extends Component {
               flex: 1,
               alignItems: 'center',
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <Text
               style={{
-                fontFamily: 'Poppins',
+                fontFamily: 'GolosText-Regular',
                 fontSize: 16,
                 marginBottom: 20,
                 color: '#444',
-              }}>
+              }}
+            >
               {t('needLogin')}
             </Text>
             <TouchableOpacity
@@ -420,13 +431,15 @@ class MyCourse extends Component {
                 paddingHorizontal: 30,
                 borderRadius: 5,
               }}
-              onPress={() => navigation.navigate('LoginScreen')}>
+              onPress={() => navigation.navigate('LoginScreen')}
+            >
               <Text
                 style={{
-                  fontFamily: 'Poppins',
+                  fontFamily: 'GolosText-Regular',
                   fontSize: 14,
                   color: '#fff',
-                }}>
+                }}
+              >
                 {t('login')}
               </Text>
             </TouchableOpacity>
@@ -436,12 +449,12 @@ class MyCourse extends Component {
     );
   }
 }
-const mapStateToProps = ({user}) => ({
+const mapStateToProps = ({ user }) => ({
   user,
 });
-const mapDispatchToProps = dispatch => ({dispatch});
+const mapDispatchToProps = (dispatch) => ({ dispatch });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(withTranslation()(MyCourse));

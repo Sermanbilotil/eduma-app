@@ -26,12 +26,11 @@ const styles = StyleSheet.create({
   },
   content: {
     backgroundColor: 'white',
-    paddingHorizontal: 22,
-    paddingBottom: 22,
+    padding: 22,
     justifyContent: 'center',
     alignItems: 'center',
-    borderTopLeftRadius: 26,
-    borderTopRightRadius: 26,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
 });
